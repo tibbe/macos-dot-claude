@@ -1,0 +1,34 @@
+# Allowlist .gitignore for ~/.claude.
+#
+# ~/.claude mixes a little durable config with a lot of secrets and runtime
+# state: credentials, prompt history, conversation transcripts, caches, daemon
+# logs. The safe default for a directory like this is to ignore everything and
+# re-include only what's meant to be versioned, so anything Claude Code drops
+# in here later stays untracked until you opt it in.
+
+# Ignore every top-level entry...
+/*
+
+# ...then re-include the config worth versioning.
+!/.gitignore
+!/CLAUDE.md
+!/settings.json
+!/statusline-command.sh
+!/scripts/
+!/skills/
+
+# In skills/, track the category source dirs (engineering/, productivity/, ...)
+# but not the flat symlinks that scripts/link-skills.sh generates — run that
+# script after cloning to recreate them. The trailing slash in `!/skills/*/`
+# re-includes directories only; the generated entries are symlinks, so they
+# stay ignored.
+/skills/*
+!/skills/*/
+
+# macOS clutter that can otherwise land inside a tracked directory.
+.DS_Store
+
+# Secrets and machine-local overrides — never commit, even if a rule above is
+# ever loosened. Last match wins, so this stays at the bottom.
+.credentials.json
+settings.local.json
