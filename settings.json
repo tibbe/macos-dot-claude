@@ -11,7 +11,6 @@
       "Edit(//tmp/**)"
     ]
   },
-  "editorMode": "vim",
   "hooks": {
     "Notification": [
       {
@@ -38,5 +37,7 @@
   },
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
+  "tui": "fullscreen",
   "agentPushNotifEnabled": true
 }
