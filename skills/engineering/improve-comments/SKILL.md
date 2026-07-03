@@ -1,6 +1,6 @@
 ---
 name: improve-comments
-description: Improve docstrings and inline comments so each serves the next reader — docstrings that state the contract, inline comments that earn their place — and conform Python docstrings to the repo's convention. Use when writing or revising code, or as a pre-commit sweep of changed code files.
+description: Improve docstrings and inline comments for a reader with zero history of the code: docstrings state the contract, inline comments earn their place. Use when writing or revising code, or as a pre-commit sweep of changed code files.
 ---
 
 # Improve comments
@@ -11,7 +11,7 @@ Apply this to code you touch as you write it. Before a commit, sweep every chang
 
 ## Docstrings
 
-Hold every docstring to one test: *would a reader with no history of this code benefit from this sentence?* A handful of things reliably fail it:
+Hold every docstring to one test: *would a reader with zero history of this code benefit from this sentence?* A handful of things reliably fail it:
 
 - **History** — "we used to", "previously", prior versions. The contract is what the code does now.
 - **Rejected alternatives** — justifying the design against an approach that was dropped.
