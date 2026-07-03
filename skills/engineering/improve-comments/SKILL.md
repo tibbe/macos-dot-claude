@@ -18,7 +18,7 @@ Hold every docstring to one test: *would a reader with zero history of this code
 - **Negative documentation** — enumerating what the code doesn't do. Keep it only when the negation counters a default expectation a stranger would actually hold; that's rare.
 - **Implementation leakage** — "uses X internally", "implemented via Y". Describe the contract; implementation notes go inline, next to the code.
 - **Caller-specific framing** — naming a function that calls this, or describing behavior as "the X flow". The same leak shows up in type and parameter names shaped around one caller.
-- **Session references** — "as you asked", "per our discussion", "the conversation above".
+- **Session references** — "as you asked", "per our discussion", "the conversation above". The subtler form has no tell-phrase: a fact reads as worth stating only because it was just discussed. Test — would you write it having opened the file cold, with no memory of the conversation? If not, cut it.
 
 Striking removes noise, not signal. When an offending sentence also carried real contract information, rewrite it forward-looking — never leave a docstring describing less than it did.
 
@@ -35,7 +35,7 @@ For other languages, apply the test to the native doc-comment syntax (JSDoc, Go 
 
 ## Inline comments
 
-An inline comment may explain *what* the code does, but it has to earn the line:
+An inline comment may explain *what* the code does, but it has to earn the line. Settle whether it should exist before how it should read: deletion is the default fix, and rewriting it forward is warranted only when you can name the surviving fact without narrating what changed:
 
 - **Narration goes.** If the comment restates the next few lines, delete it — the code already says that.
 - **The why has to be non-obvious** to survive: a hidden constraint, a subtle invariant, a workaround for a specific bug, behavior that would surprise the reader.
