@@ -5,26 +5,26 @@ description: Improve docstrings and inline comments for a reader with zero histo
 
 # Improve comments
 
-A docstring is a contract, not a logbook: it states what the code guarantees a caller, not the story of how it came to be. That story — the alternative you rejected, the change you just made, how today's callers happen to use it — is alive in the author's head and noise to everyone after. An inline comment earns its place only when it tells a later reader something the code itself can't.
+Write every comment for a reader with **zero history**: no memory of how the code got here, no access to the conversation you're in now. A docstring states the contract — what the code guarantees a caller. An inline comment must earn its line.
 
-Apply this to code you touch as you write it. Before a commit, sweep every changed code file — staged, unstaged, and the diff against the base branch. Edit in place; report in 2–4 lines which files changed, no per-violation play-by-play unless asked.
+Apply this as you write code, and as a sweep of changed files before committing.
 
 ## Docstrings
 
-Hold every docstring to one test: *would a reader with zero history of this code benefit from this sentence?* A handful of things reliably fail it:
+Hold every docstring to one test: would a **zero-history** reader benefit from this sentence? Don't include:
 
-- **History** — "we used to", "previously", prior versions. The contract is what the code does now.
-- **Rejected alternatives** — justifying the design against an approach that was dropped.
-- **Negative documentation** — enumerating what the code doesn't do. Keep it only when the negation counters a default expectation a stranger would actually hold; that's rare.
-- **Implementation leakage** — "uses X internally", "implemented via Y". Describe the contract; implementation notes go inline, next to the code.
-- **Caller-specific framing** — naming a function that calls this, or describing behavior as "the X flow". The same leak shows up in type and parameter names shaped around one caller.
-- **Session references** — "as you asked", "per our discussion", "the conversation above". The subtler form has no tell-phrase: a fact reads as worth stating only because it was just discussed. Test — would you write it having opened the file cold, with no memory of the conversation? If not, cut it.
+- **History** — the contract is the current behavior.
+- **Rejected alternatives** — defending the design against an approach you dropped.
+- **Negative documentation** — listing what the code doesn't do. Keep it only when the negation counters a default a stranger would actually assume; that's rare.
+- **Implementation leakage** — describe the contract; implementation notes go inline, next to the code.
+- **Caller-specific framing** — naming a function that calls this, or calling behavior "the X flow". The same leak shows up in type and parameter names shaped around one caller.
+- **Session references** — "as you asked", "per our discussion". The subtler form has no tell-phrase: a fact reads as worth stating only because it just came up. Would you write it having opened the file cold? If not, cut it.
 
-Striking removes noise, not signal. When an offending sentence also carried real contract information, rewrite it forward-looking — never leave a docstring describing less than it did.
+When a struck sentence also carried a real guarantee, rewrite it forward-looking — don't drop the guarantee along with the noise.
 
 ### Python structure
 
-Detect the convention before editing, strongest signal first: an explicit declaration in config — e.g. `convention = "google"` under `[tool.ruff.lint.pydocstyle]` in `pyproject.toml` — then the style the surrounding package already uses (Google, NumPy, reST). Default to Google only when nothing is declared or established. The test above applies in every convention. In Google style:
+Detect the convention before editing, strongest signal first: an explicit declaration in config — e.g. `convention = "google"` under `[tool.ruff.lint.pydocstyle]` in `pyproject.toml` — then the style the surrounding package already uses (Google, NumPy, reST). Default to Google only when nothing is declared or established. The zero-history test applies in every convention. In Google style:
 
 - Imperative summary line, on its own line.
 - `Args:`/`Returns:`/`Raises:` for non-trivial docstrings; omit any section that would be empty (`-> None` gets no `Returns:`).
@@ -35,14 +35,14 @@ For other languages, apply the test to the native doc-comment syntax (JSDoc, Go 
 
 ## Inline comments
 
-An inline comment may explain *what* the code does, but it has to earn the line. Settle whether it should exist before how it should read: deletion is the default fix, and rewriting it forward is warranted only when you can name the surviving fact without narrating what changed:
+An inline comment earns its line only when the code would **surprise** the zero-history reader — leave them wondering *why* it's written this way, or unable to tell *what* it does. Deletion is the default fix; keep or rewrite a comment only when you can name that surprise without narrating what changed.
 
-- **Narration goes.** If the comment restates the next few lines, delete it — the code already says that.
-- **The why has to be non-obvious** to survive: a hidden constraint, a subtle invariant, a workaround for a specific bug, behavior that would surprise the reader.
+- **Narration goes.** If the comment restates the next few lines, delete it — nothing there surprises the reader.
+- **The why must be non-obvious**: a hidden constraint, a subtle invariant, a workaround for a specific bug.
 - **A gotcha about a callee belongs on the callee.** "Look up X so foo() doesn't bar Y" describes foo's contract — fix foo's docstring instead of warning at every call site.
-- **State the invariant, not the fear.** Reframe "...so X doesn't happen" as the positive property the code maintains.
+- **State the invariant, not the fear.** Rewrite "...so X doesn't happen" as the positive property the code keeps.
 
-History, rejected alternatives, and caller-specific framing are out here too, same as docstrings.
+Every docstring failure mode applies here too — except implementation leakage, which is fine inline, where implementation notes belong.
 
 ## Examples
 
