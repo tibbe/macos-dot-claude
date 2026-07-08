@@ -9,6 +9,13 @@ Write every comment for a reader with **zero history**: no memory of how the cod
 
 Apply this as you write code, and as a sweep of changed files before committing.
 
+## Read before you judge
+
+Let git tell you what changed — the working-tree diff, or, when the tree is
+clean, the diff since you branched off — and work from that diff, not your
+memory of what you touched. Read every changed region with enough surrounding
+code to judge whether each comment earns its line.
+
 ## Docstrings
 
 Hold every docstring to one test: would a **zero-history** reader benefit from this sentence? Don't include:
