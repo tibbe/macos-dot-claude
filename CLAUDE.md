@@ -6,8 +6,6 @@ Comments and docstrings describe the contract for a reader with zero history —
 
 - `/improve-comments` — docstrings and inline comments. Use while writing or revising code; also swept before a commit.
 - `/improve-markdown` — Markdown prose (reference docs vs standalone prose).
-- `/write-commit-message` — authors the commit message before `git commit`.
-- `/write-pr-description` — authors the PR body before `gh pr create`.
 
 ## API design
 
