@@ -9,19 +9,18 @@ Write every comment for a reader with **zero history**: no memory of how the cod
 
 Apply this as you write code, and as a sweep of changed files before committing.
 
-## First: put the real diff in front of you
+## First: get the patch, and judge from it
 
-Establish what changed from git before judging any comment. The diff is the
-source of truth for what to review — it includes pre-existing uncommitted
-changes and files a formatter or tool rewrote.
+Run one command:
 
-1. Enumerate the changed files: `git diff --name-only` (working tree), or
-   `git diff --name-only <base>...HEAD` when the tree is clean. State the count.
-2. Read each file's diff in turn, with enough surrounding code to judge whether
-   every comment in the changed regions earns its line.
+- `git diff HEAD` for uncommitted work (staged and unstaged), or
+- `git diff <base>...HEAD` when the change is already committed.
 
-Done when every file from step 1 has had its diff read. No file is judged
-without its current diff in front of you.
+Judge every comment in the patch's hunks against what changed there. Read a
+full file only when a hunk doesn't show enough to judge a comment, or for a new
+file the patch omits.
+
+Done when every comment in the patch's hunks has been judged.
 
 ## Docstrings
 
