@@ -9,12 +9,19 @@ Write every comment for a reader with **zero history**: no memory of how the cod
 
 Apply this as you write code, and as a sweep of changed files before committing.
 
-## Read before you judge
+## First: put the real diff in front of you
 
-Let git tell you what changed — the working-tree diff, or, when the tree is
-clean, the diff since you branched off — and work from that diff, not your
-memory of what you touched. Read every changed region with enough surrounding
-code to judge whether each comment earns its line.
+Establish what changed from git before judging any comment. The diff is the
+source of truth for what to review — it includes pre-existing uncommitted
+changes and files a formatter or tool rewrote.
+
+1. Enumerate the changed files: `git diff --name-only` (working tree), or
+   `git diff --name-only <base>...HEAD` when the tree is clean. State the count.
+2. Read each file's diff in turn, with enough surrounding code to judge whether
+   every comment in the changed regions earns its line.
+
+Done when every file from step 1 has had its diff read. No file is judged
+without its current diff in front of you.
 
 ## Docstrings
 
