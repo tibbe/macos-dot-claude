@@ -169,7 +169,6 @@
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
-  "editorMode": "vim",
   "agentPushNotifEnabled": true,
   "voiceEnabled": true
 }
