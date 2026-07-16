@@ -9,18 +9,20 @@ Write every comment for a reader with **zero history**: no memory of how the cod
 
 Apply this as you write code, and as a sweep of changed files before committing.
 
-## First: get the patch, and judge from it
+## First: read the changed code, comments and all
 
 Run one command:
 
 - `git diff HEAD` for uncommitted work (staged and unstaged), or
 - `git diff <base>...HEAD` when the change is already committed.
 
-Judge every comment in the patch's hunks against what changed there. Read a
-full file only when a hunk doesn't show enough to judge a comment, or for a new
-file the patch omits.
+A comment can only be judged next to the code it describes — a stale one shows
+up only against the code that outdated it — so the unit you review is the whole
+hunk, code and comments together. Read every hunk in full, across every file
+the patch touches; open a full file when a hunk is too narrow to judge a
+comment, or for a new file the patch omits.
 
-Done when every comment in the patch's hunks has been judged.
+Done when every hunk has been read in full and every comment in it judged.
 
 ## Docstrings
 
