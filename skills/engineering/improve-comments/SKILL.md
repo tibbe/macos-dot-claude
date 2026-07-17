@@ -1,28 +1,38 @@
 ---
 name: improve-comments
-description: Improve docstrings and inline comments for a reader with zero history of the code: docstrings state the contract, inline comments earn their place. Use when writing or revising code, or as a pre-commit sweep of changed code files.
+description: Review a change's docstrings and inline comments for a reader with zero history of the code. Runs the review in a sub-agent. Use when the user wants to improve or review the docstrings and comments on a branch, a PR, or a change, or asks to clean up comments since a fixed point.
 ---
 
-# Improve comments
+Review of the diff between `HEAD` and a fixed point the user supplies — do its comments hold up for a reader with **zero history** of the code (no memory of how it got here, no access to the conversation you're in now)?
 
-Write every comment for a reader with **zero history**: no memory of how the code got here, no access to the conversation you're in now. A docstring states the contract — what the code guarantees a caller. An inline comment must earn its line.
+- **Docstrings** — state the contract: what the code guarantees a caller.
+- **Inline comments** — earn their line, or go.
 
-Apply this as you write code, and as a sweep of changed files before committing.
+The review runs as a **sub-agent** so what you already know about the change can't stand in for reading it, then this skill applies its findings.
 
-## First: read the changed code, comments and all
+## Process
 
-Run one command:
+### 1. Pin the fixed point
 
-- `git diff HEAD` for uncommitted work (staged and unstaged), or
-- `git diff <base>...HEAD` when the change is already committed.
+Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.
 
-A comment can only be judged next to the code it describes — a stale one shows
-up only against the code that outdated it — so the unit you review is the whole
-hunk, code and comments together. Read every hunk in full, across every file
-the patch touches; open a full file when a hunk is too narrow to judge a
-comment, or for a new file the patch omits.
+Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base).
 
-Done when every hunk has been read in full and every comment in it judged.
+Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside the sub-agent.
+
+### 2. Spawn the sub-agent
+
+Send one `Agent` tool call. Use the `general-purpose` subagent.
+
+**Review sub-agent prompt** — include:
+
+- The diff command from step 1.
+- The **Docstrings and Inline comments rules below, with their Examples**, pasted in full — the sub-agent has no other access to them.
+- The brief: "Apply the rules to every comment in the diff, and report each one that fails: its file and line, the current text, and the exact rewrite — or that it should be deleted."
+
+### 3. Apply
+
+Apply the reported edits verbatim — the judgment is already made; you're transcribing it, not re-deciding.
 
 ## Docstrings
 
