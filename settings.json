@@ -26,11 +26,8 @@
       "CronList"
     ]
   },
-  "disableBundledSkills": true,
-  "disableWorkflows": true,
-  "disableRemoteControl": true,
   "disableClaudeAiConnectors": true,
-  "disableArtifact": true,
+  "disableBundledSkills": true,
   "hooks": {
     "Notification": [
       {
@@ -171,6 +168,9 @@
       }
     ]
   },
+  "disableRemoteControl": true,
+  "disableWorkflows": true,
+  "disableArtifact": true,
   "statusLine": {
     "type": "command",
     "command": "sh /Users/tibbe/.claude/statusline-command.sh"
@@ -188,8 +188,8 @@
     "enabled": true,
     "mode": "hold"
   },
+  "autoMemoryEnabled": false,
   "skipDangerousModePermissionPrompt": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true,
-  "autoMemoryEnabled": false
+  "voiceEnabled": true
 }
